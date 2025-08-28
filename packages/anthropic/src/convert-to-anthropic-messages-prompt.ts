@@ -16,8 +16,8 @@ import {
 import { anthropicReasoningMetadataSchema } from './anthropic-messages-language-model';
 import { anthropicFilePartProviderOptions } from './anthropic-messages-options';
 import { getCacheControl } from './get-cache-control';
-import { webSearch_20250305OutputSchema } from './tool/web-search_20250305';
 import { codeExecution_20250522OutputSchema } from './tool/code-execution_20250522';
+import { webSearch_20250305OutputSchema } from './tool/web-search_20250305';
 
 function convertToString(data: LanguageModelV2DataContent): string {
   if (typeof data === 'string') {
@@ -220,14 +220,11 @@ export async function convertToAnthropicMessagesPrompt({
                         cache_control: cacheControl,
                       });
                     } else {
-                      // Upload as container upload 
+                      // Upload as container upload
                       anthropicContent.push({
-                        type: "container_upload",
-                        source: {
-                          type: "file",
-                          file_id: part.data,
-                        }
-                      })
+                        type: 'container_upload',
+                        file_id: convertToString(part.data),
+                      } as any);
                     }
 
                     break;
