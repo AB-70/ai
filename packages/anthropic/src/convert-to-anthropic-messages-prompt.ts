@@ -220,9 +220,14 @@ export async function convertToAnthropicMessagesPrompt({
                         cache_control: cacheControl,
                       });
                     } else {
-                      throw new UnsupportedFunctionalityError({
-                        functionality: `media type: ${part.mediaType}`,
-                      });
+                      // Upload as container upload 
+                      anthropicContent.push({
+                        type: "container_upload",
+                        source: {
+                          type: "file",
+                          file_id: part.data,
+                        }
+                      })
                     }
 
                     break;

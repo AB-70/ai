@@ -17,7 +17,8 @@ export interface AnthropicUserMessage {
     | AnthropicTextContent
     | AnthropicImageContent
     | AnthropicDocumentContent
-    | AnthropicToolResultContent
+    | AnthropicToolResultContent 
+    | AnthropicContainerUploadContent
   >;
 }
 
@@ -67,6 +68,10 @@ type AnthropicContentSource =
       type: 'text';
       media_type: 'text/plain';
       data: string;
+    } 
+    | {
+      type: "file";
+      file_id: string;
     };
 
 export interface AnthropicImageContent {
@@ -82,6 +87,17 @@ export interface AnthropicDocumentContent {
   context?: string;
   citations?: { enabled: boolean };
   cache_control: AnthropicCacheControl | undefined;
+}
+
+
+
+export interface AnthropicContainerUploadContent {
+  type: 'container_upload';
+  source: AnthropicContentSource;
+  title?: string;
+  context?: string;
+  citations?: { enabled: boolean };
+  cache_control?: AnthropicCacheControl | undefined;
 }
 
 export interface AnthropicToolCallContent {
